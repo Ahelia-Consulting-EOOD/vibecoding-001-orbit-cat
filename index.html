@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Orbit Cat — Git demo</title>
+<style>body{margin:0;background:#101626;color:#edf2ff;font:18px system-ui;display:grid;place-items:center;height:100vh}canvas{border-radius:20px}button{background:#adf179;border:0;border-radius:12px;padding:12px 25px;font:700 18px system-ui;cursor:pointer}p{margin:10px}</style>
+<main><canvas id="game" width="960" height="460"></canvas><p><button onclick="game.jump()">Jump · Space</button> <span id="status"></span></p></main>
+<script src="config.js"></script><script>
+const c=document.getElementById('game'),x=c.getContext('2d');
+window.game={y:340,vy:0,time:0,jumping:false,manual:false,
+reset(){this.y=340;this.vy=0;this.time=0;this.jumping=false;this.draw()},
+jump(){if(!this.jumping){this.vy=-CONFIG.jumpStrength;this.jumping=true}},
+step(dt){this.time+=dt;if(this.jumping){this.vy+=1100*dt;this.y+=this.vy*dt;if(this.y>=340){this.y=340;this.vy=0;this.jumping=false}}this.draw();return {time:this.time,y:this.y,vy:this.vy}},
+draw(){x.fillStyle='#14233c';x.fillRect(0,0,960,460);for(let i=0;i<25;i++){x.fillStyle=i%3?'#7285a7':'#adf179';x.beginPath();x.arc((i*157+51)%960,(i*79+31)%290,2,0,Math.PI*2);x.fill()}
+x.fillStyle='#263b55';x.beginPath();x.arc(790,85,48,0,Math.PI*2);x.fill();x.fillStyle='#446d7b';x.fillRect(0,385,960,75);x.fillStyle='#adf179';x.fillRect(0,385,960,5);
+x.fillStyle='#ffb879';x.beginPath();x.roundRect(250,this.y,65,45,12);x.fill();x.beginPath();x.moveTo(253,this.y+10);x.lineTo(255,this.y-16);x.lineTo(274,this.y+1);x.moveTo(288,this.y+1);x.lineTo(307,this.y-16);x.lineTo(311,this.y+12);x.fill();
+x.strokeStyle='#ffb879';x.lineWidth=10;x.beginPath();x.moveTo(251,this.y+32);x.quadraticCurveTo(223,this.y+34,230,this.y+12);x.stroke();x.fillStyle='#14233c';x.fillRect(277,this.y+13,5,7);x.fillRect(299,this.y+13,5,7);
+x.fillStyle='#bb99ff';x.fillRect(470,342,50,43);x.fillStyle='#edf2ff';x.font='bold 24px system-ui';x.fillText('ORBIT CAT',30,40);x.font='18px monospace';x.fillStyle='#a9bfd8';x.fillText('jumpStrength = '+CONFIG.jumpStrength,30,72);document.getElementById('status').textContent=this.y<0?'Cat outside the screen':'Try one change. Check what happens.'}
+};document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();game.jump()}});game.reset();let last=performance.now();function loop(now){if(!game.manual)game.step(Math.min((now-last)/1000,.03));last=now;requestAnimationFrame(loop)}requestAnimationFrame(loop);
+</script></html>
