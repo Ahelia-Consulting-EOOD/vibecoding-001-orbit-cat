@@ -1,41 +1,13 @@
-# Orbit Cat — episode 001
+# Orbit Cat — The Snack Mission
 
-A tiny browser game for the video **I sent my cat into space. Git brought her back.**
+Original browser game for the full Episode 001. Open `index.html` in a modern browser. No account, packages, network access or build step is needed.
 
-## Play
+Press Space or Jump to catch the floating snack and land on the launchpad. Press R or Retry for another attempt. The two mission checks report collection and landing separately.
 
-Download this repository as a ZIP, extract it and open `index.html` in a modern browser.
-Press Space or click Jump. No account, package install, AI subscription or build step is required.
-You can also serve the folder with `python3 -m http.server 8000` and open http://localhost:8000.
+`config.js` contains `jumpStrength`, the initial upward speed in pixels per second. The working value is 420. The episode deliberately tests 8400, restores the working file from a Git checkpoint, then compares 560. These values are speeds, not heights; gravity stays at 1100 pixels per second squared.
 
-## Match the video
+This new game was AI-authored in the recorded 13 November 2026 production run. It is distinct from the earlier pilot fixture. Shapes are original, fonts are system fonts, and the game sends no data anywhere.
 
-- Release tag: `episode-001-v2`.
-- Original working checkpoint: `2b5c2be7afd1bca156452e37a93577808fecc0d2`.
-- `index.html` and `config.js` are byte-identical to that checkpoint.
-- The video deliberately changes `jumpStrength` from 420 to 8400, then restores 420.
-- That multiplies initial upward velocity by twenty, not jump height. Gravity stays 1100.
-- Video gameplay is a deterministic replay of the actual game, not an AI chat recording.
+## Repeatable checks
 
-## Try the experiment
-
-Make a copy before editing, or use Git if it is installed. In `config.js`, change 420 to 8400
-and refresh the page. The cat leaves the screen. Restore 420 and refresh to bring back the
-original jump. With a Git clone, this command restores just that file from the demonstrated checkpoint:
-
-```sh
-git restore --source=2b5c2be7afd1bca156452e37a93577808fecc0d2 -- config.js
-```
-
-This discards your local edits to `config.js`; keep anything you want before running it.
-Git records commits locally. GitHub hosts the history you upload. An unrecorded version
-cannot be recovered from a history that never contained it; other backup tools are separate.
-
-## Prompt recipe
-
-> Multiply jump strength by twenty. Change only that number. Show the difference.
-
-This is an example request, not a transcript of a recorded AI interaction. Inspect the diff
-and run the game to check the result. Work out with a parent which online tools you are eligible to use.
-
-The drawing and game code are original. License: MIT. No tracking, network requests or third-party assets.
+For capture/testing, set `game.manual = true`, call `game.reset()`, then `game.jump()` and repeated `game.step(1/60)`. `game.snapshot()` reports time, position, velocity, snack collection and landing. Normal play uses real time. The simulation uses small discrete time steps, so results are compared with equivalent inputs rather than an ideal continuous-physics formula.
