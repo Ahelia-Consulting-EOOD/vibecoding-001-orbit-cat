@@ -4,7 +4,7 @@ Original browser game for the full Episode 001. Open `index.html` in a modern br
 
 Press Space or Jump to catch the floating snack and land on the launchpad. Press R or Retry for another attempt. The two mission checks report collection and landing separately.
 
-`config.js` contains `jumpStrength`, the initial upward speed in pixels per second. The working value is 420. The episode deliberately tests 8400, restores the working file from a Git checkpoint, then compares 560. These values are speeds, not heights; gravity stays at 1100 pixels per second squared.
+`config.js` contains `jumpStrength`, the initial upward speed in pixels per second. The first working version uses 420 (`episode-001-full-base`); the final demonstrated version uses 560 (`episode-001-full-v1`). The episode deliberately tests 8400, restores the working file from a Git checkpoint, then compares 560. These values are speeds, not heights; gravity stays at 1100 pixels per second squared.
 
 This new game was AI-authored in the recorded 13 November 2026 production run. It is distinct from the earlier pilot fixture. Shapes are original, fonts are system fonts, and the game sends no data anywhere.
 
